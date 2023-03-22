@@ -23,7 +23,9 @@ Attention, une mise à jour de la librairie resetera probablement ces paramètre
 Une fois que le capteur renvoie une valeur, on peut vérifier qu'il n'y a pas d'offset. Pour cela on peut print les valeurs renvoyées par le capteur dans le serial monitor, noter la valeur des trois axes puis tourner le capteur de 180 degrés pour chaque axe. On est censé retrouver la même valeur, à un signe moins près. Si ce n'est pas le cas c'est qu'il y a un offset.
 
 $$ B_{\textrm{à l'endroit}} = B + \textrm{offset}  $$
+
 $$ B_{\textrm{à l'envers}} = - B + \textrm{offset}  $$
+
 $$ \implies \textrm{offset} = \frac{B_{\textrm{à l'endroit}} + B_{\textrm{à l'envers}} }{2}$$
 
 On soustrait ensuite la valeur de cet offset pour avoir des valeurs sans offset. On peut vérifier notre calibration en calculant la norme du champ magnétique et en vérifiant qu'elle reste constante pendant qu'on tourne le capteur.
