@@ -22,15 +22,7 @@ void loop()
   float Bz = (compass.m.z) /9.8 - 78;
   String p1=" ";
   Serial.println(Bx + p1 + By + p1 + Bz);
-//  Serial.print(t);
-//  Serial.print(" ");
-//  Serial.print(Bx);
-//  Serial.print(" ");
-//  Serial.print(By);
-//  Serial.print(" ");
-//  Serial.print(Bz);
-//  Serial.print(" ");
-//    aSerial.p(t).p(" ").p(Bx).p(" ").p(By).p(" ").pln(Bz);
+
     
 
 }
