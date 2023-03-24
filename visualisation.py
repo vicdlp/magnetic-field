@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from numpy.fft import fft
 
 list = []
 f = open('logtest.log') # ouvre le fichier log
@@ -73,26 +74,27 @@ tau = N/sr
 freq = n/tau 
 
 # Get the one-sided specturm
+k = 100
 n_oneside = N//2
 # get the one side frequency
 f_oneside = freq[:n_oneside] # 
 
 plt.figure()
-plt.plot(f_oneside, np.abs(X1)[:n_oneside], label = "Bx")
+plt.plot(f_oneside[k:], np.abs(X1)[k:n_oneside], label = "Bx")
 plt.xlabel('Freq (Hz)')
 plt.legend()
 plt.ylabel('FFT Amplitude |X(freq)|')
 plt.show()
 
 plt.figure()
-plt.plot(f_oneside, np.abs(X2)[:n_oneside], label = "By")
+plt.plot(f_oneside[k:], np.abs(X2)[k:n_oneside], label = "By")
 plt.xlabel('Freq (Hz)')
 plt.legend()
 plt.ylabel('FFT Amplitude |X(freq)|')
 plt.show()
 
 plt.figure()
-plt.plot(f_oneside, np.abs(X3)[:n_oneside], label = 'Bz')
+plt.plot(f_oneside[k:], np.abs(X3)[k:n_oneside], label = 'Bz')
 plt.xlabel('Freq (Hz)')
 plt.legend()
 plt.ylabel('FFT Amplitude |X(freq)|')

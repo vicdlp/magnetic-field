@@ -42,7 +42,7 @@ def lecture(k, serial, path): # lit k valeurs envoyées par le capteur puis les 
     
 
 ser = init("COM3")
-p = Path(Path.home(), "Documents", "Victor", "currentfield.npy")
+p = "currentfield.npy"
 
 while True:
     querry(ser, p)
