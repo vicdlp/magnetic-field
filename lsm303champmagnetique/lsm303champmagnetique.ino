@@ -22,6 +22,5 @@ void loop()
   float Bz = (compass.m.z) /9.8 - 78;
   String p1=" ";
   Serial.println(Bx + p1 + By + p1 + Bz);
-
-
+  delay(1);
 }

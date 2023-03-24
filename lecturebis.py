@@ -19,11 +19,10 @@ ser = init("COM3")
 
 def querry(serialCom = ser): # va chercher une mesure (t, Bx, By, Bz) à l'arduino et la décode
     
-
     np.save("currentfield", ser.readline().decode("utf-8").strip('\r\n').split(" "))
     
     
 while True:
     querry()
 
-
+end(ser)

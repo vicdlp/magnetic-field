@@ -2,9 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from numpy.fft import fft
+from pathlib import Path
+
+p =  Path(Path.home(), "log.log")
+
 
 list = []
-f = open('logtest.log') # ouvre le fichier log
+f = open(p) # ouvre le fichier log
 line = f.readline()
 while line: # lit toutes les lignes et les met dans une liste
     try:
@@ -16,7 +20,7 @@ while line: # lit toutes les lignes et les met dans une liste
 df = pd.DataFrame([sub for sub in list[:-1]]) # crée un dataframe pandas à partir de la liste
 df.columns = ['Date', 'Time', 'Bx', 'By', 'Bz']
 
-T = pd.to_datetime(pd.Series(df['Date'] + ' ' + df['Time'], dtype = "datetime64")) # date au bon format pour l'affichage
+# T = pd.to_datetime(pd.Series(df['Date'] + ' ' + df['Time'], dtype = "datetime64")) # date au bon format pour l'affichage
 Bx = pd.Series(df["Bx"], dtype = 'float') # champ magnétique au format float
 By = pd.Series(df["By"], dtype = 'float')
 Bz = pd.Series(df["Bz"], dtype = 'float')
@@ -32,7 +36,7 @@ Bc = B_norm - np.mean(B_norm)
 plt.figure(figsize = (16, 9))
 plt.xlabel("temps (s)") 
 plt.ylabel("Champ magnétique (μT)")
-plt.plot(T, Bx, label = "Bx")
+plt.plot(Bx, label = "Bx")
 plt.legend()
 plt.grid()
 plt.show()
@@ -40,7 +44,7 @@ plt.show()
 plt.figure(figsize = (16, 9))
 plt.xlabel("temps (s)") 
 plt.ylabel("Champ magnétique (μT)")
-plt.plot(T, By , label = "By")
+plt.plot(By , label = "By")
 plt.legend()
 plt.grid()
 plt.show()
@@ -48,7 +52,7 @@ plt.show()
 plt.figure(figsize = (16, 9))
 plt.xlabel("temps (s)") 
 plt.ylabel("Champ magnétique (μT)")
-plt.plot(T, Bz, label = "Bz")
+plt.plot(Bz, label = "Bz")
 plt.legend()
 plt.grid()
 plt.show()
@@ -56,7 +60,7 @@ plt.show()
 plt.figure(figsize = (16, 9))
 plt.xlabel("temps (s)") 
 plt.ylabel("Champ magnétique (μT)")
-plt.plot(T, B_norm, label = "Norme")
+plt.plot(B_norm, label = "Norme")
 plt.legend()
 plt.grid()
 plt.show()
