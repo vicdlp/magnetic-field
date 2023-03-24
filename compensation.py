@@ -54,4 +54,4 @@ while True:
     compensate(B_normal)
 
     
-# closeSockets()
+closeSockets()

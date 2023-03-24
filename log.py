@@ -22,7 +22,7 @@ while True:
     try:
         data =  np.load(p, allow_pickle=True)
         logger.debug(data)
-        # sleep(0.125) # 8 points par secondes
+        sleep(0.125) # 8 points par secondes
     except:
         pass
         

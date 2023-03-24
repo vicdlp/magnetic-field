@@ -1,6 +1,5 @@
 import numpy as np
 import serial
-from pathlib import Path
 
 def init(port): #initialise la comunication avec le port USB
     serialCom = serial.Serial(port, 2000000)
@@ -9,42 +8,26 @@ def init(port): #initialise la comunication avec le port USB
 def end(serialCom): # ferme la connexion avec le port
     serialCom.close()
 
-def querry(serialCom, path): # va chercher une mesure (t, Bx, By, Bz) à l'arduino et la décode
+ser = init("COM3")
+
+def querry(serialCom = ser): # va chercher une mesure (t, Bx, By, Bz) à l'arduino et la décode
     
-    while True:
-        
-        try:      
-            s_bytes = serialCom.readline()
-            decoded_bytes = s_bytes.decode("utf-8").strip('\r\n')
-            
-            break
-        except:
-            continue
-        
-    np.save(path, decoded_bytes.split(" ")) # sauvegarde la valeur dans un fichier npy
+    np.save("currentfield", ser.readline().decode("utf-8").strip('\r\n').split(" "))
     
     
-def lecture(k, serial, path): # lit k valeurs envoyées par le capteur puis les enregistre en .npy
+while True:
+    querry()
+
+end(ser)
+    
+    
+def lecture(k, serial, name): # lit k valeurs envoyées par le capteur puis les enregistre en .npy
     
     B = np.empty((k, 3))
     
     for i in range(k):
-        try:      
-            s_bytes = serial.readline()
-            decoded_bytes = s_bytes.decode("utf-8").strip('\r\n')
-            B[i,:] = [float(b) for b in decoded_bytes]
-            break
-        except:
-            pass
-    
-    np.save(path, B)
+        B[i,:] = [float(b) for b in ser.readline().decode("utf-8").strip('\r\n').split(" ")]
+
+    np.save(name, B)
         
     
-
-ser = init("COM3")
-p = "currentfield.npy"
-
-while True:
-    querry(ser, p)
-
-end(ser)
