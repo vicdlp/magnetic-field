@@ -4,20 +4,20 @@ import pandas as pd
 from numpy.fft import fft
 from pathlib import Path
 
-p =  Path(Path.home(), "Documents", "GitHub", "magnetic-field", "currentfield.npy")
+p =  Path(Path.home(), "Documents", "GitHub", "magnetic-field", "log.log")
 
 
-list = []
+liste = []
 f = open(p) # ouvre le fichier log
 line = f.readline()
 while line: # lit toutes les lignes et les met dans une liste
     try:
-        list.append(line.replace("[", '').replace("]", '').replace("\n", '').replace("'", '').split(" "))
+        liste.append(line.replace("[", '').replace("]", '').replace("\n", '').replace("'", '').split(" ")).replace(",", '')
     except ValueError:
         print('Error in line :' + line )
     line = f.readline()
     
-df = pd.DataFrame([sub for sub in list[:-1]]) # crée un dataframe pandas à partir de la liste
+df = pd.DataFrame([sub for sub in liste[:-1]]) # crée un dataframe pandas à partir de la liste
 df.columns = ['Date', 'Time', 'Bx', 'By', 'Bz']
 
 T = pd.to_datetime(pd.Series(df['Date'] + ' ' + df['Time'], dtype = "datetime64")) # date au bon format pour l'affichage
