@@ -4,6 +4,11 @@ import numpy as np
 from time import sleep
 from pathlib import Path
 
+import serial
+
+ser = serial.Serial("COM3", 2000000)
+
+
 # Création du fichier .log d'une capacité maximale de 1 Go puis qui se réécrit à partir du début une fois arrivé à 1 Go
 
 log_formatter = logging.Formatter('%(asctime)s %(message)s')

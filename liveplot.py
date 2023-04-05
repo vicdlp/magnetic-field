@@ -15,8 +15,9 @@ import serial
 
 class DynamicPlotter:
 
-    def __init__(self, plot, channel, sampleinterval=0.1, timewindow=10., size=(600, 1000)):
+    def __init__(self, plot, channel, com = "COM3", sampleinterval=0.1, timewindow=10., size=(600, 1000)):
         # Data stuff
+        self.ser = serial.Serial(com, 2000000)
         self.interval = int(sampleinterval * 1000)
         self.bufsize = int(timewindow / sampleinterval)
         self.databuffer = collections.deque([0.0] * self.bufsize, self.bufsize)
@@ -44,12 +45,13 @@ class DynamicPlotter:
         
         while True:
             try:
-                data =  np.load("currentfield.npy", allow_pickle=True)
+                data =  ser.readline().decode("utf-8").strip('\r\n').split(" ")
+                B = float(data[self.channel-1])
                 break
             except:
                 continue
             
-        return float(data[self.channel-1])
+        return B
 
     def updateplot(self):
         self.databuffer.append(self.getdata())
