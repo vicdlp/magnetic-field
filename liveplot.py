@@ -16,7 +16,7 @@ import log
 
 class DynamicPlotter:
 
-    def __init__(self, ser, plot, channel, sampleinterval=0.1, timewindow=10., size=(600, 1000)):
+    def __init__(self, ser, plot, channel, sampleinterval=0.001, timewindow=10., size=(600, 1000)):
         # Data stuff
         self.ser = ser
         self.interval = int(sampleinterval * 1000)
@@ -53,9 +53,9 @@ class DynamicPlotter:
             except:
                 continue
             
-        if self.counter > 500:
-            self.counter = 0
-            log.debug(self.logger, data)
+        log.logdata(np.array([format(float(i), '.2f') for i in data]))
+        
+        # log.debug(self.logger, np.array([format(float(i), '.2f') for i in data]))
             
                 
         return B

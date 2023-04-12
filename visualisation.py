@@ -4,23 +4,22 @@ import pandas as pd
 from numpy.fft import fft
 from pathlib import Path
 
-p =  Path(Path.home(), "Documents", "GitHub", "magnetic-field", "log.log")
-
+p =  Path(Path.home(), "Documents", "GitHub", "magnetic-field", "log", "2023", "4", "12", "log.txt")
 
 liste = []
 f = open(p) # ouvre le fichier log
 line = f.readline()
 while line: # lit toutes les lignes et les met dans une liste
     try:
-        liste.append(line.replace("[", '').replace("]", '').replace("\n", '').replace("'", '').split(" ")).replace(",", '')
+        liste.append(line.replace("'", '').replace("[", '').replace("]", '').replace("\n", '').split(" "))
     except ValueError:
         print('Error in line :' + line )
     line = f.readline()
     
 df = pd.DataFrame([sub for sub in liste[:-1]]) # crée un dataframe pandas à partir de la liste
-df.columns = ['Date', 'Time', 'Bx', 'By', 'Bz']
+df.columns = ['Time', 'Bx', 'By', 'Bz']
 
-T = pd.to_datetime(pd.Series(df['Date'] + ' ' + df['Time'], dtype = "datetime64")) # date au bon format pour l'affichage
+T = pd.to_datetime(df['Time']) # date au bon format pour l'affichage
 Bx = pd.Series(df["Bx"], dtype = 'float') # champ magnétique au format float
 By = pd.Series(df["By"], dtype = 'float')
 Bz = pd.Series(df["Bz"], dtype = 'float')
@@ -65,41 +64,41 @@ plt.legend()
 plt.grid()
 plt.show()
 
-# Calcul du spectre du signal
+# # Calcul du spectre du signal
 
-X1 = fft(Bxc)
-X2 = fft(Byc)
-X3 = fft(Bzc)
-N = len(T)
-n = np.arange(N)
-# get the sampling rate
-sr = 8 # Hz
-tau = N/sr
-freq = n/tau 
+# X1 = fft(Bxc)
+# X2 = fft(Byc)
+# X3 = fft(Bzc)
+# N = len(T)
+# n = np.arange(N)
+# # get the sampling rate
+# sr = 8 # Hz
+# tau = N/sr
+# freq = n/tau 
 
-# Get the one-sided specturm
-k = 100
-n_oneside = N//2
-# get the one side frequency
-f_oneside = freq[:n_oneside] # 
+# # Get the one-sided specturm
+# k = 100
+# n_oneside = N//2
+# # get the one side frequency
+# f_oneside = freq[:n_oneside] # 
 
-plt.figure()
-plt.plot(f_oneside[k:], np.abs(X1)[k:n_oneside], label = "Bx")
-plt.xlabel('Freq (Hz)')
-plt.legend()
-plt.ylabel('FFT Amplitude |X(freq)|')
-plt.show()
+# plt.figure()
+# plt.plot(f_oneside[k:], np.abs(X1)[k:n_oneside], label = "Bx")
+# plt.xlabel('Freq (Hz)')
+# plt.legend()
+# plt.ylabel('FFT Amplitude |X(freq)|')
+# plt.show()
 
-plt.figure()
-plt.plot(f_oneside[k:], np.abs(X2)[k:n_oneside], label = "By")
-plt.xlabel('Freq (Hz)')
-plt.legend()
-plt.ylabel('FFT Amplitude |X(freq)|')
-plt.show()
+# plt.figure()
+# plt.plot(f_oneside[k:], np.abs(X2)[k:n_oneside], label = "By")
+# plt.xlabel('Freq (Hz)')
+# plt.legend()
+# plt.ylabel('FFT Amplitude |X(freq)|')
+# plt.show()
 
-plt.figure()
-plt.plot(f_oneside[k:], np.abs(X3)[k:n_oneside], label = 'Bz')
-plt.xlabel('Freq (Hz)')
-plt.legend()
-plt.ylabel('FFT Amplitude |X(freq)|')
-plt.show()
+# plt.figure()
+# plt.plot(f_oneside[k:], np.abs(X3)[k:n_oneside], label = 'Bz')
+# plt.xlabel('Freq (Hz)')
+# plt.legend()
+# plt.ylabel('FFT Amplitude |X(freq)|')
+# plt.show()

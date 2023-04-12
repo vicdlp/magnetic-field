@@ -1,8 +1,8 @@
 import numpy as np
 
-P = np.array([[1/-51.988148768680326, 0, 0],
-             [0, 1/67.49159802351841, 0],
-             [0, 0, 1/41.66274632488274]]) # matrice de passage entre le champ mesuré et le courant dans les bobines (A/µT)
+P = np.array([[0.0192, 0, 0],
+             [0, 0.0148, 0],
+             [0, 0, 0.0240]]) # matrice de passage entre le champ mesuré et le courant dans les bobines (A/µT)
 
 
 I_normal = np.array([0.0514, 0.078, 0.756 ]) # courant sans perturbations
