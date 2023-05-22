@@ -45,15 +45,18 @@ class DynamicPlotter:
 
     def getdata(self):
         self.counter += 1
-        while True:
-            try:
-                data =  self.ser.readline().decode("utf-8").strip('\r\n').split(" ")
-                B = float(data[self.channel-1])
-                break
-            except:
-                continue
+
+        data =  self.ser.readline().decode("utf-8").strip('\r\n').split(" ")
+                
+        while len(data) != 3:
+            data = self.ser.readline().decode("utf-8").strip('\r\n').split(" ")
             
-        log.logdata(np.array([format(float(i), '.2f') for i in data]))
+        B = float(data[self.channel-1])
+
+            
+        if self.counter > 1000:
+            log.logdata(data)
+            self.counter = 0
         
         # log.debug(self.logger, np.array([format(float(i), '.2f') for i in data]))
             
@@ -81,7 +84,7 @@ class MainWindow(QtWidgets.QMainWindow, gui.Ui_MainWindow):
             
         
         
-ser = serial.Serial("COM3", 2000000)
+ser = serial.Serial("COM4", 2000000)
 app = QtWidgets.QApplication(sys.argv)
 w = MainWindow()
 w.show()
